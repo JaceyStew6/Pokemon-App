@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, FlatList, Image, Button, ScrollView, TouchableO
 import React, { useEffect, useState, useCallback } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 export default function MyPokedex() {
     const [pokedex, setPokedex] = useState([]);
@@ -34,7 +35,15 @@ export default function MyPokedex() {
 
     return (
         <ScrollView style={styles.mainContainer}>
-            <Text style={styles.myPokedexTitle}>My Pokedex</Text>
+            <View style={styles.rowTitle}>
+                <Text style={styles.myPokedexTitle}>My Pokedex
+                </Text>
+                <Icon
+                    name='catching-pokemon'
+                    size={45}
+                    color='#ae9205' />
+            </View>
+
             <FlatList
                 data={pokedex}
                 numColumns={2}
@@ -44,7 +53,7 @@ export default function MyPokedex() {
                             <View style={styles.cardContainer}>
                                 <Image
                                     source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${item.id}.png` }}
-                                    style={{ width: '90%', height: 160 }}
+                                    style={{ width: '80%', height: 150, resizeMode: 'contain' }}
                                 />
                                 <View style={styles.row}>
                                     <Text style={styles.textStyle}>{item.name.toUpperCase()}</Text>
@@ -77,7 +86,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginVertical: 10,
-        color: '#881122',
+        color: '#ae9205',
+        marginRight: 10,
+    },
+
+    rowTitle: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     touchableContainer: {

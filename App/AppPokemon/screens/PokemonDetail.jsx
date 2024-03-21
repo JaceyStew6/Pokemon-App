@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, FlatList, Image, Button, ScrollView, TouchableH
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import HomeScreen from './HomeScreen';
 
 export default function PokemonDetail({ navigation, route }) {
@@ -42,7 +43,7 @@ export default function PokemonDetail({ navigation, route }) {
             <View style={styles.imageStyle}>
                 <Image
                     source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png` }}
-                    style={[styles.imageStyle,{ width: '100%', height: 400 }]} />
+                    style={[styles.imgStyle, { width: '100%', height: 400, resizeMode: 'contain' }]} />
             </View>
 
             <View style={styles.pokemonContainer}>
@@ -57,11 +58,18 @@ export default function PokemonDetail({ navigation, route }) {
 
                 {/* Prenom du pokemon et id */}
                 <View style={styles.pokemonHead}>
-                    <Text style={styles.pokemonName}>{pokemon.name} <Text style={styles.pokemonId}>#{pokemon.id}</Text></Text>
+                    <Text style={styles.pokemonName}>{pokemon.name ? pokemon.name.toUpperCase() : ''} <Text style={styles.pokemonId}>#{pokemon.id}</Text></Text>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={addToPokedex}>
-                        <Text style={styles.buttonText}>Add to Pokedex</Text>
+                        <View style={styles.buttonContainer}>
+                            <Text style={styles.buttonText}>+</Text>
+                            <Icon
+                                name='catching-pokemon'
+                                size={45}
+                                color='#e2e6e9' />
+                        </View>
+
                     </TouchableOpacity>
                 </View>
 
@@ -83,12 +91,16 @@ export default function PokemonDetail({ navigation, route }) {
                     scrollEnabled={false}
                 />
 
+                <View style={styles.separator}></View>
+
                 {/* Description du pokemon */}
                 <Text style={styles.titles}>Description</Text>
                 <View style={styles.typeContainer}>
-                    <Text style={styles.textDesc}>height: {pokemon.height}"</Text>
-                    <Text style={styles.textDesc}>weight: {pokemon.weight}kg</Text>
+                    <Text style={styles.textType}>height: {pokemon.height}"</Text>
+                    <Text style={styles.textType}>weight: {pokemon.weight}kg</Text>
                 </View>
+
+                <View style={styles.separator}></View>
 
                 {/* Stats du pokemon */}
                 <Text style={styles.titles}>Stats</Text>
@@ -98,9 +110,9 @@ export default function PokemonDetail({ navigation, route }) {
                         return (
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={styles.progressBarContainer}>
-                                    <Text style={styles.textType}>{itemData.item.stat.name.toUpperCase()}: {itemData.item.base_stat}</Text>
+                                    <Text style={styles.textDesc}>{itemData.item.stat.name.toUpperCase()}: {itemData.item.base_stat}</Text>
                                 </View>
-                                <View style={[styles.progBar, { height: 10, backgroundColor: '#6f8490', marginHorizontal: 10, flex: 0.5, width: 100 }]}>
+                                <View style={[styles.progBar, { height: 10, backgroundColor: '#c5ced2', marginHorizontal: 10, flex: 0.5, width: 100 }]}>
                                     <View style={{ width: `${(itemData.item.base_stat / 255) * 100}%`, backgroundColor: '#dfbb06', height: '100%' }} />
                                 </View>
                             </View>
@@ -109,6 +121,9 @@ export default function PokemonDetail({ navigation, route }) {
                     keyExtractor={(item, index) => index}
                     scrollEnabled={false}
                 />
+
+                <View style={styles.separator}></View>
+
 
                 {/* Evolutions du pokemon */}
                 <Text style={styles.titles}>Evolutions</Text>
@@ -122,27 +137,35 @@ const styles = StyleSheet.create({
     mainContainer: {
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#c5ced2',
+        backgroundColor: '#6f8490',
         height: '100%',
         width: '100%',
     },
 
     imageStyle: {
-        backgroundColor: '#8ca7b6',
+        backgroundColor: '#c5ced2',
         borderBottomRightRadius: 30,
         borderBottomLeftRadius: 30,
-        shadowColor: '#343d43',
+        shadowColor: '#202629',
         shadowOpacity: 0.9,
         shadowRadius: 3.84,
-        elevation: 3,
+        elevation: 4,
     },
 
     imgStyle: {
-        // borderRadius: 50,
-        shadowColor: '#343d43',
-        shadowOpacity: 0.9,
-        shadowRadius: 3.84,
-        elevation: 3,
+        // backgroundColor: '#ac9004',
+        borderColor: '#8ca7b6',
+        borderWidth: 1,
+        borderBottomRightRadius: 30,
+        borderBottomLeftRadius: 30,
+    },
+
+    buttonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
     },
 
     button: {
@@ -151,18 +174,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#881122',
         padding: 10,
         marginHorizontal: 10,
-        borderRadius: 10,
-        width: '30%',
-        height: 50,
-        shadowColor: '#343d43',
+        borderRadius: 40,
+        width: 80,
+        height: 80,
+        shadowColor: '#202629',
         shadowOpacity: 0.9,
         shadowRadius: 3.84,
-        elevation: 3,
+        elevation: 4,
     },
 
     buttonText: {
-        color: 'white',
+        color: '#e2e6e9',
         fontWeight: 'bold',
+        fontSize: 30,
     },
 
     pokemonContainer: {
@@ -174,13 +198,13 @@ const styles = StyleSheet.create({
     pokemonName: {
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#343d43'
+        color: '#e2e6e9'
     },
 
     pokemonId: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#6f8490'
+        color: '#e2e6e9'
     },
 
     pokemonHead: {
@@ -197,14 +221,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         paddingTop: 10,
-        textAlign: 'center',
+        // textAlign: 'center',
         marginVertical: 10,
-        color: '#6f8490'
+        color: '#c5ced2'
     },
 
     typeContainer: {
         display: 'flex',
-        backgroundColor: '#8ca7b6',
+        backgroundColor: '#dfbb06',
         paddingHorizontal: 10,
         paddingVertical: 5,
         marginHorizontal: 5,
@@ -219,13 +243,14 @@ const styles = StyleSheet.create({
     textType: {
         fontSize: 15,
         fontWeight: 'bold',
-        color: '#343d43'
+        color: '#47555d'
     },
 
     textDesc: {
         fontSize: 15,
+        fontWeight: 'bold',
         marginHorizontal: 5,
-        color: '#343d43',
+        color: '#e2e6e9',
     },
 
     progBar: {
@@ -245,8 +270,15 @@ const styles = StyleSheet.create({
         flex: 0.5,
         flexDirection: 'row',
         justifyContent: 'flex-end',
-    }
+    },
 
+    separator: {
+        width: '80%',
+        height: 2,
+        backgroundColor: '#8ca7b6',
+        marginTop: 30,
+        alignSelf: 'center',
+    }
 
     // buttonContainer: {
     //     display: 'flex',

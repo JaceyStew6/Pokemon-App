@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator()
 
 function HomeStack() {
     return (
-        <Stack.Navigator initialRouteName='Home'>
+        <Stack.Navigator initialRouteName='Home' >
             <Stack.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name='PokemonDetail' component={PokemonDetail} />
         </Stack.Navigator>
@@ -37,7 +37,7 @@ export default function App() {
                 }}>
                     <Tab.Screen name='HomeStack' component={HomeStack} options={{
                         headerShown: false, tabBarIcon: ({ color, size }) => (<Icon name="home" size={size} color={color} />),
-                        tabBarLabel: "Home"
+                        tabBarLabel: "Home",
                     }} />
                     <Tab.Screen name='MyPokedex' component={MyPokedex} options={{
                         headerShown: false, tabBarIcon: ({ color, size }) => (<IconA name="catching-pokemon" size={size} color={color} />),

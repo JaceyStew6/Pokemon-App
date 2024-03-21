@@ -5,17 +5,17 @@ import axios from "axios";
 export const getPokemons = createAsyncThunk(
     "pokemons/getPokemons",
     async () => {
-        // On utilise axios pour faire une requête get sur l'api. 
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=50&offset=0');
-        // On retourne la data de la requête.
-        return response.data;
+        try {
+
+            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200&offset=0`);
+            return response.data.results;
+        }
+        catch (error) {
+            throw error;
+        }
+        
     }
 );
-// function getPokemons() {
-//     axios.get('https://pokeapi.co/api/v2/pokemon?limit=160&offset=0')
-//     .then(response => setContacts(response.data))
-//     .catch(error => console.error(error))
-// }
 
 // On crée un slice pour gérer les pokémons.
 const pokemonSlice = createSlice({

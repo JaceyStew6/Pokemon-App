@@ -27,7 +27,8 @@ export default function HomeScreen({ navigation }) {
 
 
     useEffect(() => {
-        dispatch(getPokemons());
+            dispatch(getPokemons());
+
     }, []);
 
 
@@ -36,7 +37,7 @@ export default function HomeScreen({ navigation }) {
         return <Text>Loading...</Text>;
     }
 
-    const filteredPokemons = (pokemons.results ?? []).filter(pokemon => {
+    const filteredPokemons = (pokemons ?? []).filter(pokemon => {
         const name = pokemon.name.toLowerCase();
         const id = pokemon.url.split('/')[6];
         // return pokemon.types.some(type => type.type.name === search) || name.includes(search.toLowerCase()) || id.includes(search);
@@ -72,6 +73,7 @@ export default function HomeScreen({ navigation }) {
                 onChangeText={text => setSearch(text)}
                 value={search}
                 placeholder="Search by name or ID"
+                placeholderTextColor={'#6f8490'}
             />
 
             <FlatList
@@ -85,7 +87,7 @@ export default function HomeScreen({ navigation }) {
                             <View style={styles.cardContainer}>
                                 <Image
                                     source={{ uri: imageUrl }}
-                                    style={{ width: '90%', height: 160 }} />
+                                    style={{ width: '80%', height: 150, resizeMode: 'contain' }} />
                                 <View style={styles.row}>
                                     <Text style={styles.textStyle}>{itemData.item.name.toUpperCase()}</Text>
                                     <Text style={styles.textStyle}>#{id}</Text>
@@ -142,7 +144,9 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#6f8490',
+        color: '#f7fbff',
+        // color: '#6f8490',
+
     },
     inputStyle: {
         height: 40,
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
         color: '#343d43',
     }
 
-        // typeContainer: {
+    // typeContainer: {
     //     display: 'flex',
     //     backgroundColor: 'lightgrey',
     //     marginHorizontal: 5,

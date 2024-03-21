@@ -112,6 +112,7 @@ npx react-native run-android
 - [x] Create main features
   - [x] Store enabling to call the Pokeapi and get every Pokemons
   - [x] Configure Navigation Properties with a Bottom Tab and a Stack
+    - [ ] Fix the Home button (don't redirect to HomeScreen)
   - [x] Home Screen
     - [x] List of Pokemons with their pic, name and ID
     - [x] Input to search a Pokemon by its name or ID
@@ -125,8 +126,8 @@ npx react-native run-android
   - [x] Detail Screen
     - [x] List of Pokemons with their pic, name and ID
     - [x] Feature to delete a Pokemon when user press on the selected Pokemon
-    - [ ] Go to a Pokemon detail when the user do a short press on the selected Pokemon
-    - [ ] Delete a Pokemon when the user do a long press on the selected Pokemon
+    - [ ] Feature to go to a Pokemon detail when the user do a short press on the selected Pokemon
+    - [ ] Feature to delete a Pokemon when the user do a long press on the selected Pokemon
 
 
 
